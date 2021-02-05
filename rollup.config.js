@@ -1,48 +1,64 @@
-import babel from "rollup-plugin-babel";
-import babelrc from "babelrc-rollup";
-import resolve from "rollup-plugin-node-resolve";
-import commonjs from "rollup-plugin-commonjs";
-import replace from "rollup-plugin-replace";
-import pkg from "./package.json";
-import uglify from "rollup-plugin-uglify";
-import alias from 'rollup-plugin-alias';
+import babel from '@rollup/plugin-babel';
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import replace from '@rollup/plugin-replace';
+import alias from '@rollup/plugin-alias';
 
-const bundle = (name, globalName, baseConfig) => {
+const bundle = (name, globalName, { globals = {}, ...baseConfig }, umdConfig) => {
   baseConfig = {
-    ...baseConfig,
     plugins: [
       replace({
-        "process.env.CUBEJS_API_URL": `"${process.env.CUBEJS_API_URL || "https://statsbot.co/cubejs-api/v1"}"`
+        'process.env.CUBEJS_API_URL': `"${process.env.CUBEJS_API_URL || 'https://statsbot.co/cubejs-api/v1'}"`,
       }),
-    ]
+    ],
+    ...baseConfig,
   };
 
   const baseUmdConfig = {
-    ...baseConfig,
+    ...(umdConfig || baseConfig),
     plugins: [
       ...baseConfig.plugins,
-      babel({
-        exclude: 'node_modules/**',
-        runtimeHelpers: true,
-        "presets": [
-          '@babel/preset-react',
-          [
-            "@babel/preset-env",
-            {
-              shippedProposals: true,
-              "useBuiltIns": "usage"
-            }
-          ]
-        ]
+      commonjs({
+        extensions: ['.js'],
       }),
       resolve({
-        module: true
+        extensions: ['.ts', '.js', '.json'],
+        mainFields: ['browser', 'module', 'main'],
+      }),
+      babel({
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        exclude: ['node_modules/**', /\/core-js\//],
+        babelHelpers: 'runtime',
+        presets: [
+          '@babel/preset-react',
+          '@babel/preset-typescript',
+          [
+            '@babel/preset-env',
+            {
+              shippedProposals: true,
+              useBuiltIns: 'usage',
+              corejs: 3,
+            },
+          ],
+        ],
+        plugins: [
+          [
+            '@babel/plugin-transform-runtime',
+            {
+              corejs: false,
+              helpers: true,
+              regenerator: true,
+              useESModules: false,
+            },
+          ],
+        ],
       }),
       alias({
-        '@cubejs-client/core': '../cubejs-client-core/src/index.js'
+        entries: {
+          '@cubejs-client/core': '../cubejs-client-core/src/index.js',
+        },
       }),
-      commonjs()
-    ]
+    ],
   };
 
   return [
@@ -52,18 +68,20 @@ const bundle = (name, globalName, baseConfig) => {
       output: [
         {
           file: `packages/${name}/dist/${name}.umd.js`,
-          format: "umd",
-          name: globalName
-        }
-      ]
+          format: 'umd',
+          name: globalName,
+          exports: 'auto',
+          sourcemap: true,
+        },
+      ],
     },
 
     // minified browser-friendly UMD build
-    /*{
+    /* {
       ...BASE_UMD_CONFIG,
       output: [{ file: pkg.browserMin, format: "umd", name: "cubejs" }],
       plugins: [...BASE_UMD_CONFIG.plugins, uglify()]
-    },*/
+    }, */
 
     // // ES module (for bundlers) build.
     {
@@ -71,44 +89,115 @@ const bundle = (name, globalName, baseConfig) => {
       plugins: [
         ...baseConfig.plugins,
         babel({
+          extensions: ['.js', '.jsx', '.ts', '.tsx'],
           exclude: 'node_modules/**',
-          runtimeHelpers: true,
-          "presets": [
+          babelHelpers: 'runtime',
+          presets: [
             '@babel/preset-react',
+            '@babel/preset-typescript',
             [
-              "@babel/preset-env",
+              '@babel/preset-env',
               {
                 shippedProposals: true,
-                "useBuiltIns": "usage"
-              }
-            ]
+                useBuiltIns: 'usage',
+                corejs: 3,
+              },
+            ],
           ],
-          "plugins": [
+          plugins: [
             [
-              "@babel/plugin-transform-runtime",
+              '@babel/plugin-transform-runtime',
               {
-                "corejs": false,
-                "helpers": true,
-                "regenerator": true,
-                "useESModules": false
-              }
-            ]
-          ]
-        })
+                corejs: false,
+                helpers: true,
+                regenerator: true,
+                useESModules: false,
+              },
+            ],
+          ],
+        }),
       ],
-      output: [{ file: `packages/${name}/dist/${name}.js`, format: "cjs" }]
-    }
-  ]
+      output: [
+        {
+          file: `packages/${name}/dist/${name}.js`,
+          format: 'cjs',
+          sourcemap: true,
+        }
+      ],
+    },
+    // // ES module (for bundlers) build.
+    {
+      ...baseConfig,
+      plugins: [
+        ...baseConfig.plugins,
+        babel({
+          extensions: ['.js', '.jsx', '.ts', '.tsx'],
+          exclude: 'node_modules/**',
+          babelHelpers: 'runtime',
+          presets: [
+            '@babel/preset-react',
+            '@babel/preset-typescript',
+            [
+              '@babel/preset-env',
+              {
+                shippedProposals: true,
+                useBuiltIns: 'usage',
+                corejs: 3,
+              },
+            ],
+          ],
+          plugins: [
+            [
+              '@babel/plugin-transform-runtime',
+              {
+                corejs: false,
+                helpers: true,
+                regenerator: true,
+                useESModules: false,
+              },
+            ],
+          ],
+        }),
+      ],
+      output: [
+        {
+          file: `packages/${name}/dist/${name}.esm.js`,
+          format: 'es',
+          sourcemap: true,
+          globals,
+        },
+      ],
+    },
+  ];
 };
 
-export default bundle('cubejs-client-core', 'cubejs', {
-  input: "packages/cubejs-client-core/src/index.js",
-}).concat(bundle('cubejs-chartjs', 'chartjsConfig', {
-  input: "packages/cubejs-chartjs/src/index.js",
-})).concat(bundle('cubejs-react', 'cubejsReact', {
-  input: "packages/cubejs-react/src/index.js",
-  external: [
-    'react',
-    'prop-types'
-  ],
-}));
+export default bundle(
+  'cubejs-client-core',
+  'cubejs',
+  {
+    input: 'packages/cubejs-client-core/src/index.js',
+  },
+  {
+    input: 'packages/cubejs-client-core/src/index.umd.js',
+  }
+)
+  .concat(
+    bundle('cubejs-client-ws-transport', 'CubejsWebSocketTransport', {
+      input: 'packages/cubejs-client-ws-transport/src/index.ts',
+    })
+  )
+  .concat(
+    bundle('cubejs-client-react', 'cubejsReact', {
+      input: 'packages/cubejs-client-react/src/index.js',
+      external: ['react', 'prop-types'],
+    })
+  )
+  .concat(
+    bundle('cubejs-client-vue', 'cubejsVue', {
+      input: 'packages/cubejs-client-vue/src/index.js',
+      external: ['vue'],
+      globals: {
+        vue: 'Vue',
+      },
+    })
+  );

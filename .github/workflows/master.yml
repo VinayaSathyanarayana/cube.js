@@ -1,0 +1,48 @@
+name: Master
+on:
+  push:
+    paths:
+      - '.github/workflows/push.yml'
+      - '.github/workflows/master.yml'
+      - 'packages/**'
+      - '.eslintrc.js'
+      - '.prettierrc'
+      - 'lerna.json'
+      - 'package.json'
+      - 'rollup.config.js'
+      - 'yarn.lock'
+      - 'docs-gen/**'
+      - 'docs/**'
+    branches:
+      - master
+jobs:
+  docker-image-dev:
+    name: Release :dev image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Push to Docker Hub
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ./packages/cubejs-docker/dev.Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: cubejs/cube:dev
+      - name: Update repo description
+        uses: peter-evans/dockerhub-description@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: cubejs/cube
+          readme-filepath: ./packages/cubejs-docker/README.md

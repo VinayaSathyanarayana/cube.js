@@ -1,30 +1,68 @@
 {
   "name": "cubejs-cli",
   "description": "Cube.js Command Line Interface",
-  "author": "Statsbot, Inc.",
-  "version": "0.0.13",
+  "author": "Cube Dev, Inc.",
+  "version": "0.26.2",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cube-js/cube.js.git",
+    "directory": "packages/cubejs-cli"
+  },
   "engines": {
-    "node": ">=8.11.1"
+    "node": ">=10.8.0"
   },
   "bin": {
-    "cubejs": "./index.js"
+    "cubejs": "dist/src/index.js"
   },
   "scripts": {
-    "test": "mocha"
+    "build": "rm -rf dist && npm run tsc",
+    "tsc": "tsc",
+    "watch": "tsc -w",
+    "test": "npm run unit",
+    "unit": "jest dist/test",
+    "lint": "linter src/* --ext .ts,.js",
+    "lint:fix": "linter --fix src/* --ext .ts,.js"
   },
+  "files": [
+    "dist/src/*",
+    "yarn.lock",
+    "README.md",
+    "LICENSE"
+  ],
   "dependencies": {
-    "analytics-node": "^3.3.0",
+    "@cubejs-backend/shared": "^0.26.2",
     "chalk": "^2.4.2",
+    "cli-progress": "^3.8.2",
     "commander": "^2.19.0",
-    "cross-spawn": "^6.0.5",
-    "fs-extra": "^7.0.1",
-    "node-machine-id": "^1.1.10"
+    "cross-spawn": "^7.0.1",
+    "dotenv": "^8.2.0",
+    "fs-extra": "^8.1.0",
+    "inquirer": "^7.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.5",
+    "semver": "^7.3.2",
+    "source-map-support": "^0.5.19"
   },
   "devDependencies": {
-    "eslint": "^4.14.0",
-    "eslint-plugin-node": "^5.2.1",
-    "mocha": "^5.2.0",
-    "should": "^13.2.3"
+    "@cubejs-backend/linter": "^0.26.0",
+    "@oclif/command": "^1.8.0",
+    "@types/cli-progress": "^3.8.0",
+    "@types/cross-spawn": "^6.0.2",
+    "@types/fs-extra": "^9.0.2",
+    "@types/inquirer": "^7.3.1",
+    "@types/jest": "^25.2.3",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/node": "^14.11.10",
+    "@types/request-promise": "^4.1.46",
+    "@types/semver": "^7.3.4",
+    "husky": "^4.2.3",
+    "jest": "^25.5.4",
+    "should": "^13.2.3",
+    "typescript": "~4.1.2"
   },
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "eslintConfig": {
+    "extends": "../cubejs-linter"
+  }
 }

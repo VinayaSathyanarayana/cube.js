@@ -1,19 +1,39 @@
 {
   "name": "@cubejs-backend/mysql-driver",
   "description": "Cube.js Mysql database driver",
-  "author": "Statsbot, Inc.",
-  "version": "0.0.21",
+  "author": "Cube Dev, Inc.",
+  "version": "0.26.2",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cube-js/cube.js.git",
+    "directory": "packages/cubejs-mysql-driver"
+  },
   "engines": {
-    "node": ">=8.11.1"
+    "node": ">=10.8.0"
   },
   "main": "driver/MySqlDriver.js",
+  "typings": "driver/index.d.ts",
   "scripts": {
-    "test": "mocha"
+    "integration": "jest",
+    "integration:mysql": "jest",
+    "lint": "eslint driver/*.js test/*.js"
   },
   "dependencies": {
-    "@cubejs-backend/query-orchestrator": "^0.0.21",
+    "@cubejs-backend/query-orchestrator": "^0.26.2",
+    "@types/mysql": "^2.15.15",
     "generic-pool": "^3.6.0",
     "mysql": "^2.16.0"
   },
-  "license": "Apache-2.0"
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-node": "^5.2.1",
+    "jest": "^25.1.0",
+    "testcontainers": "^2.4.0"
+  },
+  "license": "Apache-2.0",
+  "publishConfig": {
+    "access": "public"
+  }
 }

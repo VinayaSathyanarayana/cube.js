@@ -1,0 +1,9 @@
+[workspace]
+members = [
+    "cubestore",
+    "cubehll",
+    "cubezetasketch",
+]
+
+[patch.crates-io]
+sqlparser = { git = 'https://github.com/cube-js/sqlparser-rs', branch = 'cubestore-2021-01-05' }

@@ -1,32 +1,95 @@
 {
   "name": "@cubejs-backend/schema-compiler",
   "description": "Cube.js schema compiler",
-  "author": "Statsbot, Inc.",
-  "version": "0.0.20",
-  "engines": {
-    "node": ">=8.11.1"
+  "author": "Cube Dev, Inc.",
+  "version": "0.26.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cube-js/cube.js.git",
+    "directory": "packages/cubejs-schema-compiler"
   },
+  "engines": {
+    "node": ">=10.8.0"
+  },
+  "files": [
+    "dist/src",
+    "adapter",
+    "scaffolding"
+  ],
+  "main": "dist/src/index.js",
+  "typings": "dist/src/index.d.ts",
   "scripts": {
-    "test": "mocha"
+    "build": "rm -rf dist && npm run tsc",
+    "tsc": "tsc",
+    "watch": "tsc -w",
+    "test": "npm run unit && npm run integration",
+    "unit": "nyc --reporter=lcov mocha --full-trace dist/test/unit",
+    "integration": "nyc --reporter=lcov mocha --full-trace dist/test/integration/*",
+    "integration:mssql": "nyc --reporter=lcov mocha --full-trace dist/test/integration/mssql",
+    "integration:mysql": "nyc --reporter=lcov mocha --full-trace dist/test/integration/mysql",
+    "integration:postgres": "nyc --reporter=lcov mocha --full-trace dist/test/integration/postgres",
+    "integration:clickhouse": "nyc --reporter=lcov mocha --full-trace dist/test/integration/clickhouse",
+    "lint": "linter src/* test/* --ext .ts,.js",
+    "lint:fix": "linter --fix src/* test/* --ext .ts,.js"
   },
   "dependencies": {
-    "babel-generator": "^6.25.0",
-    "babel-traverse": "^6.25.0",
-    "babel-types": "^6.25.0",
-    "babylon": "^6.17.4",
+    "@babel/code-frame": "^7.12.11",
+    "@babel/core": "^7.12.10",
+    "@babel/generator": "^7.12.10",
+    "@babel/parser": "^7.12.10",
+    "@babel/preset-env": "^7.12.10",
+    "@babel/standalone": "^7.12.10",
+    "@babel/traverse": "^7.12.10",
+    "@babel/types": "^7.12.12",
+    "@hapi/joi": "^15.1.1",
+    "@types/ramda": "^0.27.34",
+    "antlr4": "4.8.0",
+    "cron-parser": "^2.16.3",
+    "humps": "^2.0.1",
     "inflection": "^1.12.0",
-    "joi": "^10.6.0",
+    "lru-cache": "^5.1.1",
     "moment-range": "^4.0.1",
-    "moment-timezone": "^0.5.13",
+    "moment-timezone": "^0.5.28",
     "node-dijkstra": "^2.5.0",
-    "ramda": "^0.24.1",
-    "syntax-error": "^1.3.0",
-    "humps": "^2.0.1"
+    "ramda": "^0.27.0",
+    "syntax-error": "^1.3.0"
   },
   "devDependencies": {
-    "mocha": "^3.4.2",
-    "should": "^11.2.1",
-    "pg-promise": "^7.3.2"
+    "@apla/clickhouse": "^1.5.5",
+    "@cubejs-backend/linter": "^0.26.0",
+    "@types/babel__code-frame": "^7.0.2",
+    "@types/babel__generator": "^7.6.2",
+    "@types/babel__parser": "^7.1.1",
+    "@types/babel__traverse": "^7.11.0",
+    "@types/hapi__joi": "^17.1.0",
+    "@types/inflection": "^1.5.28",
+    "@types/lru-cache": "^5.1.0",
+    "@types/mocha": "^8.2.0",
+    "@types/node": "^8.10.66",
+    "@types/sqlstring": "^2.3.0",
+    "@types/syntax-error": "^1.4.1",
+    "@types/uuid": "^3.4.9",
+    "istanbul": "^0.4.5",
+    "mocha": "^8.0.1",
+    "mssql": "^6.1.0",
+    "mysql": "^2.18.1",
+    "nyc": "^15.0.0",
+    "pg-promise": "^10.5.2",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4",
+    "should": "^13.2.3",
+    "source-map-support": "^0.5.19",
+    "sqlstring": "^2.3.1",
+    "testcontainers": "^2.4.0",
+    "typescript": "^4.1.3",
+    "uuid": "^3.3.2"
   },
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "nyc": {
+    "source-map": true,
+    "produce-source-map": true
+  },
+  "eslintConfig": {
+    "extends": "../cubejs-linter"
+  }
 }

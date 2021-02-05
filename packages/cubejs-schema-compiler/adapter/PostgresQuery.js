@@ -1,31 +1,8 @@
-const BaseQuery = require('./BaseQuery');
-const ParamAllocator = require('./ParamAllocator');
+const { PostgresQuery } = require('../dist/src/adapter/PostgresQuery');
 
-const GRANULARITY_TO_INTERVAL = {
-  date: 'day',
-  week: 'week',
-  hour: 'hour',
-  month: 'month'
-};
-
-class PostgresParamAllocator extends ParamAllocator {
-  paramPlaceHolder(paramIndex) {
-    return `$${paramIndex + 1}`;
-  }
-}
-
-class PostgresQuery extends BaseQuery {
-  newParamAllocator() {
-    return new PostgresParamAllocator();
-  }
-
-  convertTz(field) {
-    return `(${field}::timestamptz AT TIME ZONE '${this.timezone}')`;
-  }
-
-  timeGroupedColumn(granularity, dimension) {
-    return `date_trunc('${GRANULARITY_TO_INTERVAL[granularity]}', ${dimension})`;
-  }
-}
+process.emitWarning(
+  'Using absolute import with @cubejs-backend/schema-compiler is deprecated',
+  'DeprecationWarning'
+);
 
 module.exports = PostgresQuery;

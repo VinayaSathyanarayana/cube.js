@@ -1,29 +1,8 @@
-const postgres = require('./PostgresQuery');
-const mysql = require('./MysqlQuery');
-const mssql = require('./MssqlQuery');
-const bigquery = require('./BigqueryQuery');
-const redshift = require('./RedshiftQuery');
-const prestodb = require('./PrestodbQuery');
-const vertica = require('./VerticaQuery');
-const snowflake = require('./SnowflakeQuery');
+const { QueryBuilder } = require('../dist/src/adapter/QueryBuilder');
 
-const ADAPTERS = {
-  postgres,
-  redshift,
-  mysql,
-  mssql,
-  bigquery,
-  prestodb,
-  qubole_prestodb: prestodb,
-  athena: prestodb,
-  vertica,
-  snowflake
-};
+process.emitWarning(
+  'Using absolute import with @cubejs-backend/schema-compiler is deprecated',
+  'DeprecationWarning'
+);
 
-exports.query = (compilers, adapter, queryOptions) => {
-  if (!ADAPTERS[adapter]) {
-    return null;
-  }
-
-  return new (ADAPTERS[adapter])(compilers, queryOptions);
-};
+module.exports = QueryBuilder;

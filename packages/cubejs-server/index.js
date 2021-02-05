@@ -1,47 +1,17 @@
-require('dotenv').config();
-const CubejsServerCore = require('@cubejs-backend/server-core');
+const { run } = require('@oclif/command');
+const { CubejsServer } = require('./dist/server');
+const { ServerContainer } = require('./dist/server/container');
 
-class CubejsServer {
-  constructor(config) {
-    config = config || {};
-    this.core = CubejsServerCore.create(config);
-  }
-
-  async listen() {
-    try {
-      const express = require('express');
-      const app = express();
-      const bodyParser = require('body-parser');
-      app.use(require('cors')());
-      app.use(bodyParser.json({ limit: '50mb' }));
-
-      await this.core.initApp(app);
-      const port = process.env.PORT || 4000;
-
-      return new Promise((resolve, reject) => {
-        app.listen(port, (err) => {
-          if (err) {
-            reject(err);
-            return;
-          }
-          resolve({ app, port });
-        });
-      })
-    } catch (e) {
-      this.core.event && (await this.core.event('Dev Server Fatal Error', {
-        error: (e.stack || e.message || e).toString()
-      }));
-      throw e;
-    }
-  }
-
-  static createDriver(dbType) {
-    return CubejsServerCore.createDriver(dbType);
-  }
-
-  static driverDependencies(dbType) {
-    return CubejsServerCore.driverDependencies(dbType);
-  }
-}
-
+/**
+ * After 5 years working with TypeScript, now I know
+ * that commonjs and nodejs require is not compatibility with using export default
+ */
 module.exports = CubejsServer;
+
+/**
+ * It's needed to move our CLI to destructing style on import
+ * Please sync this file with src/index.ts
+ */
+module.exports.CubejsServer = CubejsServer;
+module.exports.ServerContainer = ServerContainer;
+module.exports.run = run;
