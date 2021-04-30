@@ -1206,10 +1206,10 @@
   resolved "https://registry.yarnpkg.com/@ctrl/tinycolor/-/tinycolor-3.3.1.tgz#fa0efcf813daa43f8a6aef3ddaa80f7e66f1278e"
   integrity sha512-jUJrjU62MUgHDSu5JfONfgRM2V7GfN5KknsygfIbxwRZXGeayIzxk4O9GiYgEAr9DG5HJThTF5+a5x3wtrOKzQ==
 
-"@cubejs-client/core@^0.25.0":
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/@cubejs-client/core/-/core-0.25.0.tgz#8b7fac7c333d72803b2dcac33d403702d9107f51"
-  integrity sha512-/Zu23svhCmWaYTCHjZbEvM4jrkFQrCe8JRYmg6GteP9fmmjH5QBnJ60qS8fyYP3c0VSWIkDNBp1e3/+DaR/s+Q==
+"@cubejs-client/core@^0.26.0", "@cubejs-client/core@^0.26.102":
+  version "0.26.102"
+  resolved "https://registry.yarnpkg.com/@cubejs-client/core/-/core-0.26.102.tgz#8cb4e7c35ee117b69aeb02df2da053fc0df8c886"
+  integrity sha512-fi1oH+xz56D2BgNuqNdxKNEscufOVeSEzr1i4zuD7xjELVewHRiMX/N1FIjwtOmxSm3eZNzBFHcG3fjQ5cCM4Q==
   dependencies:
     "@babel/runtime" "^7.1.2"
     core-js "^3.6.5"
@@ -1220,13 +1220,13 @@
     url-search-params-polyfill "^7.0.0"
     uuid "^3.4.0"
 
-"@cubejs-client/react@^0.25.14":
-  version "0.25.14"
-  resolved "https://registry.yarnpkg.com/@cubejs-client/react/-/react-0.25.14.tgz#16e4162293aba05f03eb6c30729f0aedbc32a28f"
-  integrity sha512-RZ5i7JV67SH7Bt5qDF3mYpPnZ0KCTKsoq1fKDbgeOqDvZNFJA1OYSBbnpzeaz2gyTIl2YxfoErsxrfGc/XWvGA==
+"@cubejs-client/react@^0.26.0":
+  version "0.26.102"
+  resolved "https://registry.yarnpkg.com/@cubejs-client/react/-/react-0.26.102.tgz#9c976f5b4dcad61fa3dc0c9e61162ebd7d5e1c4e"
+  integrity sha512-lTN7wbbwqnuXVc86FVsG62c4O+OiisUOhlaW2Qvm5BL0S5vMayfwM0vkL2WCq2+ELfiRZFkVEoNfQgpZS13FKg==
   dependencies:
     "@babel/runtime" "^7.1.2"
-    "@cubejs-client/core" "^0.25.0"
+    "@cubejs-client/core" "^0.26.102"
     core-js "^3.6.5"
     ramda "^0.27.0"
 
@@ -11164,9 +11164,9 @@ sshpk@^1.7.0:
     tweetnacl "~0.14.0"
 
 ssri@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/ssri/-/ssri-6.0.1.tgz#2a3c41b28dd45b62b63676ecb74001265ae9edd8"
-  integrity sha512-3Wge10hNcT1Kur4PDFwEieXSCMCJs/7WvSACcrMYrNp+b8kDL1/0wJch5Ni2WrtwEa2IO8OsVfeKIciKCDx/QA==
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/ssri/-/ssri-6.0.2.tgz#157939134f20464e7301ddba3e90ffa8f7728ac5"
+  integrity sha512-cepbSq/neFK7xB6A50KHN0xHDotYzq58wWCa5LeWqnPrHG8GzfEjO/4O8kpmcGW+oaxkvhEJCWgbgNk4/ZV93Q==
   dependencies:
     figgy-pudding "^3.5.1"
 
