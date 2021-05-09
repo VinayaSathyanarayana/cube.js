@@ -1206,10 +1206,10 @@
   resolved "https://registry.yarnpkg.com/@ctrl/tinycolor/-/tinycolor-3.3.1.tgz#fa0efcf813daa43f8a6aef3ddaa80f7e66f1278e"
   integrity sha512-jUJrjU62MUgHDSu5JfONfgRM2V7GfN5KknsygfIbxwRZXGeayIzxk4O9GiYgEAr9DG5HJThTF5+a5x3wtrOKzQ==
 
-"@cubejs-client/core@^0.25.0":
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/@cubejs-client/core/-/core-0.25.0.tgz#8b7fac7c333d72803b2dcac33d403702d9107f51"
-  integrity sha512-/Zu23svhCmWaYTCHjZbEvM4jrkFQrCe8JRYmg6GteP9fmmjH5QBnJ60qS8fyYP3c0VSWIkDNBp1e3/+DaR/s+Q==
+"@cubejs-client/core@^0.26.0", "@cubejs-client/core@^0.26.102":
+  version "0.26.102"
+  resolved "https://registry.yarnpkg.com/@cubejs-client/core/-/core-0.26.102.tgz#8cb4e7c35ee117b69aeb02df2da053fc0df8c886"
+  integrity sha512-fi1oH+xz56D2BgNuqNdxKNEscufOVeSEzr1i4zuD7xjELVewHRiMX/N1FIjwtOmxSm3eZNzBFHcG3fjQ5cCM4Q==
   dependencies:
     "@babel/runtime" "^7.1.2"
     core-js "^3.6.5"
@@ -1220,13 +1220,13 @@
     url-search-params-polyfill "^7.0.0"
     uuid "^3.4.0"
 
-"@cubejs-client/react@^0.25.14":
-  version "0.25.14"
-  resolved "https://registry.yarnpkg.com/@cubejs-client/react/-/react-0.25.14.tgz#16e4162293aba05f03eb6c30729f0aedbc32a28f"
-  integrity sha512-RZ5i7JV67SH7Bt5qDF3mYpPnZ0KCTKsoq1fKDbgeOqDvZNFJA1OYSBbnpzeaz2gyTIl2YxfoErsxrfGc/XWvGA==
+"@cubejs-client/react@^0.26.0":
+  version "0.26.102"
+  resolved "https://registry.yarnpkg.com/@cubejs-client/react/-/react-0.26.102.tgz#9c976f5b4dcad61fa3dc0c9e61162ebd7d5e1c4e"
+  integrity sha512-lTN7wbbwqnuXVc86FVsG62c4O+OiisUOhlaW2Qvm5BL0S5vMayfwM0vkL2WCq2+ELfiRZFkVEoNfQgpZS13FKg==
   dependencies:
     "@babel/runtime" "^7.1.2"
-    "@cubejs-client/core" "^0.25.0"
+    "@cubejs-client/core" "^0.26.102"
     core-js "^3.6.5"
     ramda "^0.27.0"
 
@@ -5818,9 +5818,9 @@ hoopy@^0.1.4:
   integrity sha512-HRcs+2mr52W0K+x8RzcLzuPPmVIKMSv97RGHy0Ea9y/mpcaK+xTrjICA04KAHi4GRzxliNqNJEFYWHghy3rSfQ==
 
 hosted-git-info@^2.1.4:
-  version "2.8.8"
-  resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.8.8.tgz#7539bd4bc1e0e0a895815a2e0262420b12858488"
-  integrity sha512-f/wzC2QaWBs7t9IYqB4T3sR1xviIViXJRJTWBlx2Gf3g0Xi5vI7Yy4koXQ1c9OYDGHN9sBy1DQ2AB8fqZBWhUg==
+  version "2.8.9"
+  resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.8.9.tgz#dffc0bf9a21c02209090f2aa69429e1414daf3f9"
+  integrity sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==
 
 hpack.js@^2.1.6:
   version "2.1.6"
